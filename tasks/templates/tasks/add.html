@@ -1,0 +1,27 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mt-5">Add new task</h2>
+
+    <form action="{% url 'tasks:add' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name }}
+        </div>
+        <div class="form-group form-check">
+            {{ form.completed }}
+            <label class="form-check-label" for="exampleCheck1">Completed</label>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.list_task.name }}">Select List</label>
+            {{ form.list_task }}
+        </div>
+        <small><a class="btn-block mb-2" href="{% url 'tasks:index' %}">View tasks</a></small>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+</div>
+
+{% endblock %}

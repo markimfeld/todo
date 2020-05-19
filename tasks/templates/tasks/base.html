@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Keep</title>
+    <link rel="shortcut icon" href="{% static 'tasks/assets/brand/logo-solid.svg' %}" type="image/x-icon">
+    <!-- BOOTSTRAP 4 CSS -->
+    <link rel="stylesheet" href="{% static 'tasks/bootstrap/css/bootstrap.min.css' %}">
+    <!-- AWESOME FONTS -->
+    <link rel="stylesheet" href="{% static 'tasks/fontawesome/css/all.min.css' %}">
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'tasks/css/styles.css' %}">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'tasks:index' %}">
+                <img src="{% static 'tasks/assets/brand/logo-solid.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                Keep
+            </a>
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" data-toggle="tooltip" data-placement="bottom" title="Add New Task" href="{% url 'tasks:add' %}"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- BOOTSTRAP 4 JS -->
+    <script src="{% static 'tasks/jquery/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'tasks/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'tasks/bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
