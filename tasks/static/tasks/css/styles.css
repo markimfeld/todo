@@ -6,3 +6,13 @@
     outline: none !important;
     box-shadow: none !important;
 }
+
+.form-control-custom {
+    border: none;
+}
+
+.form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+

@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'ajax/bootstrap/css/bootstrap.min.css' %}">
+    </head>
+    <body>
+        {% block content %}
+        {% endblock %}
+        
+        <script src="{% static 'ajax/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'ajax/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    </body>
+</html>

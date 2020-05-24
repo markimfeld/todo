@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'hello.apps.HelloConfig',
     'newyear.apps.NewyearConfig',
     'tasks.apps.TasksConfig',
+    'ajax.apps.AjaxConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

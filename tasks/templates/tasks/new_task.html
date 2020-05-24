@@ -1,0 +1,19 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="mt-5">Add new task</h2>
+
+    <form action="{% url 'tasks:new_task' %}" method="post" id="newTaskForm" data-url="{% url 'tasks:new_task' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name }}
+        </div>
+        <small><a class="btn-block mb-2" href="{% url 'tasks:index' %}">View tasks</a></small>
+        <button type="button" class="btn btn-primary" id="btnCreateTask">Save</button>
+    </form>
+
+</div>
+
+{% endblock %}

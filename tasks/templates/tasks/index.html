@@ -3,49 +3,130 @@
 {% block content %}
 
 <div class="container py-5">
+    <div class="row mb-3">
+        <div class="col col-md-6 col-lg-4 d-flex justify-content-around align-items-center mx-auto">
+            {% for tag in tags %}
+                <form action="{% url 'tasks:index' %}" method="get">
+                    <input type="hidden" name="tag" value="{{ tag }}">
+                    <button type="submit" class="btn"><span class="badge badge-primary">{{ tag }}</span></button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
     <div class="row">
         {% for list in lists %}
-        <div class="col col-md-4">
+        <div class="col col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ list }}</span>
-                    <span class="badge badge-pill badge-primary">{{ list.tag }}</span>
+                    {% for tag in list.tags.all %}
+                        <span class="badge badge-pill badge-primary">{{ tag }}</span>
+                    {% endfor %}
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        {% for task in tasks %}
+                        {% for task in list.tasks.all %}
                         {% if not task.completed %}
                             <li class="list-group-item">
-                                <input type="checkbox" aria-label="Checkbox for following text input">
+                                <input id="{{task.id}}" type="checkbox">
                                 {{ task }}
                             </li>
                             {% endif %}
                         {% endfor %}
+                        <li class="list-group-item text-muted">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-link p-0" type="button" data-toggle="modal" data-target="#exampleModal{{list.id}}"><i class="fas fa-plus"></i> List element...</button>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{list.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ list.name.capitalize }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="{% url 'tasks:index' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                    <div class="form-group">
+                                                        {{ form.name }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form.list_task }}
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
 
-                    <button class="btn btn-link mt-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-link mt-2" type="button" data-toggle="collapse" data-target="#collapseExample{{ list.id }}" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fas fa-angle-right"></i> Completed Items
                     </button>
-                    <div class="collapse" id="collapseExample">
-                    <ul class="list-group list-group-flush">
-                        {% for task in tasks %}
-                        {% if task.completed %}
-                            <li class="list-group-item">
-                                <input type="checkbox" aria-label="Checkbox for following text input" checked>
-                                {{ task }}
-                            </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
+                    <div class="collapse" id="collapseExample{{ list.id }}">
+                        <ul class="list-group list-group-flush">
+                            {% for task in list.tasks.all %}
+                            {% if task.completed %}
+                                <li class="list-group-item">
+                                    <input type="checkbox" aria-label="Checkbox for following text input" checked>
+                                    {{ task }}
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                <div class="card-footer mb-0 pb-0">
-                    <p class="text-muted text-center"><small>Last edition: {{ list_task.last_edited_date }}</small></p>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Last edition: {{ list.last_edited_date }}</small>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal{{list.id}}">
+                        <i class="fas fa-trash text-danger"></i>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{list.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete list</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure to delete {{list.name}}? 
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <a href="{% url 'tasks:delete_list' list.id %}" class="btn btn-primary" role="button" aria-pressed="true">Confirm</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col col-md-4 mx-auto">
+            <div class="alert alert-info" role="alert">
+                No lists added yet!
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+
+
+
 
 {% endblock %}

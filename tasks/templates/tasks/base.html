@@ -34,8 +34,8 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" data-toggle="tooltip" data-placement="bottom" title="Add New Task" href="{% url 'tasks:add' %}"><i class="fas fa-plus"></i></a>
+                    <a class="nav-item nav-link active" href="{% url 'tasks:index' %}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" data-toggle="tooltip" data-placement="bottom" title="Add New List" href="{% url 'tasks:new_list' %}"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -49,5 +49,7 @@
     <script src="{% static 'tasks/jquery/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'tasks/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'tasks/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- CUSTOM JS -->
+    <script src="{% static 'tasks/js/app.js' %}"></script>
 </body>
 </html>
