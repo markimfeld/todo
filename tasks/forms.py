@@ -17,12 +17,7 @@ class NewTaskForm(forms.ModelForm):
                     'class': 'form-control',
                     'placeholder': 'Check email, do something, etc..',
                 }
-            ),
-            'list_task': forms.Select(
-                attrs = {
-                    'class': 'form-control'
-                }
-            ),
+            )
         }
 
 class NewListForm(forms.ModelForm):

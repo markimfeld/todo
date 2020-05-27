@@ -1,11 +1,43 @@
 {% extends 'ajax/layout.html' %}
 
-
 {% block title %}
-    Index
+    Testing Ajax
 {% endblock %}
 
 {% block content %}
-    <p>Hello world...</p>
+    <div class="container">
+        <div class="row my-5">
+            <div class="col col-md-6 mx-auto">
+                <form action="{% url 'ajax:index' %}" method="post" id="newTaskForm" data-url="{% url 'ajax:index' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            {{ form.name }}
+                            <div class="input-group-append">
+                                <button 
+                                    class="btn btn-success" 
+                                    type="button" 
+                                    id="btnCreateTask"
+                                >
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-6 mx-auto">
+                <ul class="list-group" id="listTask">
+                    {% for task in tasks %}
+                        <li class="list-group-item d-flex justify-content-between"><span>{{ task }}</span><a href="{% url 'ajax:delete_task' task.id %}"><i class="fas fa-minus"></i></a></li>
+                    {% empty %}
+                        <li class="list-group-item">No tasks added yet!</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

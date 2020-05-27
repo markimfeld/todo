@@ -37,7 +37,8 @@ def index(request):
         form = NewTaskForm(request.POST)
 
         if form.is_valid():
-            form = form.save()
+            task = form.save()
+
             return HttpResponseRedirect(reverse('tasks:index'))
         else:
             return render(request, 'tasks/index.html', {
@@ -98,11 +99,11 @@ def new_tag(request):
 #             form = form.save()
 #             return HttpResponseRedirect(reverse('tasks:index'))
 #         else:
-#             return render(request, 'tasks/index.html', {
+#             return render(request, 'tasks/new_task.html', {
 #                 'form': NewTaskForm()
 #             })
 
-#     return render(request, 'tasks/index.html', {
+#     return render(request, 'tasks/new_task.html', {
 #         'form': NewTaskForm(),
 #         'lists': lists
 #     })
@@ -114,4 +115,14 @@ def delete_list(request, pk):
     if lista is not None:
         lista.delete()
     
+    return HttpResponseRedirect(reverse('tasks:index'))
+
+def delete_task(request, list_pk, task_pk):
+
+    list_task = ListTask.objects.get(pk=list_pk)
+    task = Task.objects.get(pk=task_pk)
+    
+    if list_task.id == task.list_task.id and list_task.name == task.list_task.name:
+        task.delete()
+
     return HttpResponseRedirect(reverse('tasks:index'))
